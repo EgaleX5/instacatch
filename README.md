@@ -1,15 +1,32 @@
-# ShadowHive - Instagram Phishing Tool
+# <img src="https://img.icons8.com/nolan/64/cyber-security.png" width="40"/> ShadowHive - Advanced Termux Phishing Toolkit
 
-**ShadowHive** is an Instagram phishing tool developed by **EgaleX5**. This tool is intended for educational purposes only and should only be used on accounts where you have explicit permission.
+![Banner](https://i.imgur.com/JmYQ8yO.png)
 
-## Features
+> **Warning**  
+> 🔞 This tool is for **educational purposes only**. Use it only on systems you own or have permission to test.
 
-- Instagram login credentials capture template
-- Supports Cloudflare, SSH, and Serveo tunneling
-- Automatic port selection
-- Login attempt logging
+<div align="center">
 
-## Installation
-git clone
-https://github.com/EgaleX5/ShadowHive.git
-   
+[![GitHub Stars](https://img.shields.io/github/stars/EgaleX5/ShadowHive?style=for-the-badge)](https://github.com/EgaleX5/ShadowHive/stargazers)
+[![Termux Supported](https://img.shields.io/badge/Termux-Supported-brightgreen?style=for-the-badge)](https://termux.com)
+[![License](https://img.shields.io/badge/License-MIT-red?style=for-the-badge)](LICENSE)
+
+</div>
+
+## 🌟 Features
+- 15+ Preloaded Phishing Templates
+- Auto-Tunneling (Cloudflare/Ngrok/Localtunnel)
+- Stealth Mode (Bypasses Basic Detection)
+- No Root Required
+- Real-time Credential Capture
+- Mobile-Optimized Pages
+
+## 🚀 Quick Start
+
+### Installation
+```bash
+pkg update -y && pkg upgrade -y
+pkg install -y git python
+git clone https://github.com/EgaleX5/ShadowHive.git
+cd ShadowHive
+pip install -r requirements.txt
