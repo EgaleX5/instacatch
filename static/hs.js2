@@ -1,0 +1,60 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // 🔹 Password Show/Hide Toggle
+    const passwordField = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+
+    togglePassword.addEventListener("click", function () {
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            togglePassword.classList.remove("fa-eye");
+            togglePassword.classList.add("fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            togglePassword.classList.remove("fa-eye-slash");
+            togglePassword.classList.add("fa-eye");
+        }
+    });
+
+    // 🔹 Continue Button Enable/Disable Logic
+    const usernameField = document.getElementById("username");
+    const continueBtn = document.querySelector(".btn");
+    const form = document.querySelector("form");
+
+    function validateFields() {
+        if (usernameField.value.trim() !== "" && passwordField.value.trim() !== "") {
+            continueBtn.removeAttribute("disabled");
+        } else {
+            continueBtn.setAttribute("disabled", "true");
+        }
+    }
+
+    usernameField.addEventListener("input", validateFields);
+    passwordField.addEventListener("input", validateFields);
+
+    // 🔹 Form Submit Event (Data Flask Server Pe Bhejna)
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Default form submission rokna
+
+        const username = usernameField.value.trim();
+        const password = passwordField.value.trim();
+
+        fetch("/submit", { // ✅ Flask route '/submit' pe request bhej raha hai
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username, password }) // JSON format me data bhejna
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Server Response:", data);
+            alert("Data Submitted Successfully!");
+            form.reset(); // Form reset karna
+            continueBtn.setAttribute("disabled", "true"); // Button disable karna dubara
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error submitting data!");
+        });
+    });
+});

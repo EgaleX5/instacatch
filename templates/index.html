@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Followers - Premium</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        .main-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .btn {
+            margin-top: 20px;
+            width: 200px;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background: #ff6600;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #cc5500;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>Welcome to Free Followers Service</h1>
+        <p>Get 2,000 Instagram followers instantly!</p>
+        <a href="{{ url_for('hs_page') }}">
+    <button class="btn">Get 2K Free Followers</button>
+        </a>
+    </div>
+</body>
+</html>
