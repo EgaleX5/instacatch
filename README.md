@@ -14,7 +14,7 @@
 </div>
 
 ## 🌟 Features
-- 15+ Preloaded Phishing Templates
+- instgram Phishing Template
 - Auto-Tunneling (Cloudflare/Ngrok/Localtunnel)
 - Stealth Mode (Bypasses Basic Detection)
 - No Root Required
@@ -29,4 +29,4 @@ pkg update -y && pkg upgrade -y
 pkg install -y git python
 git clone https://github.com/EgaleX5/ShadowHive.git
 cd ShadowHive
-pip install -r requirements.txt
+python3 joker-Eye.py
