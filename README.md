@@ -10,7 +10,6 @@
 - Login attempt logging
 
 ## Installation
-
-1. **Clone the repository**
-
+git clone
+https://github.com/EgaleX5/ShadowHive.git
    
