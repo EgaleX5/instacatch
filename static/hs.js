@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 🔹 Password Show/Hide Toggle
+    // Password Show/Hide
     const passwordField = document.getElementById("password");
     const togglePassword = document.getElementById("togglePassword");
 
@@ -15,11 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // 🔹 Continue Button Enable/Disable Logic
+    // Form Fields
     const usernameField = document.getElementById("username");
     const continueBtn = document.querySelector(".btn");
     const form = document.querySelector("form");
 
+    // Button enable/disable
     function validateFields() {
         if (usernameField.value.trim() !== "" && passwordField.value.trim() !== "") {
             continueBtn.removeAttribute("disabled");
@@ -31,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     usernameField.addEventListener("input", validateFields);
     passwordField.addEventListener("input", validateFields);
 
-    // 🔹 Status Message Box
+    // Status Box (for incorrect login only)
     const statusBox = document.createElement("div");
     statusBox.id = "loginStatus";
     statusBox.style.display = "none";
@@ -41,10 +42,18 @@ document.addEventListener("DOMContentLoaded", function () {
     statusBox.style.borderRadius = "5px";
     form.appendChild(statusBox);
 
-    // 🔹 Form Submit Event
+    // Loading spinner
+    const loadingSpinner = document.getElementById("loading");
+
+    // Popup element
+    const popup = document.getElementById("popup");
+
+    // Form Submit
     form.addEventListener("submit", function (event) {
         event.preventDefault();
-        continueBtn.setAttribute("disabled", "true"); // Disable immediately after submit
+        continueBtn.setAttribute("disabled", "true");
+        loadingSpinner.style.display = "block";
+        statusBox.style.display = "none";
 
         const username = usernameField.value.trim();
         const password = passwordField.value.trim();
@@ -58,28 +67,27 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Server Response:", data);
+            loadingSpinner.style.display = "none";
 
             if (data.success) {
-                statusBox.textContent = "Login successful!";
-                statusBox.style.backgroundColor = "green";
-                statusBox.style.color = "white";
+                form.style.display = "none";           // hide form
+                popup.style.display = "flex";          // show popup
             } else {
-                statusBox.textContent = "Sorry incorrect password";
+                statusBox.textContent = "Sorry, incorrect password.";
                 statusBox.style.backgroundColor = "red";
                 statusBox.style.color = "white";
+                statusBox.style.display = "block";
+
+                setTimeout(() => {
+                    statusBox.style.display = "none";
+                }, 3000);
             }
 
-            statusBox.style.display = "block";
             form.reset();
             continueBtn.setAttribute("disabled", "true");
-
-            // 🔹 Auto-hide status message after 3 seconds
-            setTimeout(() => {
-                statusBox.style.display = "none";
-            }, 3000);
         })
         .catch(error => {
+            loadingSpinner.style.display = "none";
             console.error("Error:", error);
             statusBox.textContent = "Error submitting data!";
             statusBox.style.backgroundColor = "red";

