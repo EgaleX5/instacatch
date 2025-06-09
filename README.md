@@ -35,3 +35,4 @@ git clone https://github.com/EgaleX5/ShadowHive.git
 cd ShadowHive
 bash setup.sh   # First-time setup
 python3 joker-Eye.py
+# instacatch
