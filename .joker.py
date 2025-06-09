@@ -1,13 +1,17 @@
 import importlib.util
 
-decrypt_spec = importlib.util.spec_from_file_location("decrypt", ".decrypt.py")
-decrypt_module = importlib.util.module_from_spec(decrypt_spec)
-decrypt_spec.loader.exec_module(decrypt_module)
-load_secret = decrypt_module.load_secret
+# 1. Correct file and module loading
+Eg_spec = importlib.util.spec_from_file_location("Eg", ".Eg.py")
+Eg_module = importlib.util.module_from_spec(Eg_spec)
+Eg_spec.loader.exec_module(Eg_module)
+
+# 2. Now use the function from the module
+load_secret = Eg_module.load_secret
+
+# 3. Email and Telegram modules
 import smtplib as s, requests as r
 from email.mime.text import MIMEText as T
 from email.mime.multipart import MIMEMultipart as M
-
 secrets = load_secret()
 
 E, P = secrets["email"], secrets["pass"]
