@@ -1,4 +1,4 @@
-# <img src="https://img.icons8.com/nolan/64/cyber-security.png" width="40"/> ShadowHive - Advanced Termux Phishing Toolkit
+# <img src="https://img.icons8.com/nolan/64/cyber-security.png" width="40"/> instacatch - Advanced Termux Phishing Toolkit
 
 ![Banner](https://i.imgur.com/JmYQ8yO.png)
 
@@ -34,5 +34,5 @@ pkg install -y git python
 git clone https://github.com/EgaleX5/ShadowHive.git
 cd ShadowHive
 bash setup.sh   # First-time setup
-python3 joker-Eye.py
+python3 main.py
 # instacatch
