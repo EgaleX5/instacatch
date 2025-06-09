@@ -1,0 +1,4 @@
+.Eg.py
+.secret.enc
+__pycache__/
+log.txt
