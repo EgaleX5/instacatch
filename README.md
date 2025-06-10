@@ -31,8 +31,7 @@
 ```bash
 pkg update -y && pkg upgrade -y
 pkg install -y git python
-git clone https://github.com/EgaleX5/ShadowHive.git
-cd ShadowHive
-bash setup.sh   # First-time setup
+git clone https://github.com/EgaleX5/instacatch.git
+cd instacatch 
+bash setup.sh  
 python3 main.py
-# instacatch
