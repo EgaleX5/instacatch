@@ -42,9 +42,9 @@ pkg update -y && pkg upgrade -y
 
 # Step 2: Install Required Termux Packages
 echo -e "\e[1;36mInstalling required Termux packages...\e[0m"
-pkg install -y python git nano curl openssh
+pkg install -y python git nano curl openssl
 
-# Step 3: Install Python and Dependencies
+# Step 3: Install Python yeand Dependencies
 echo -e "\e[1;36mUpgrading pip and installing Python libraries...\e[0m"
 pip install --upgrade pip
 
