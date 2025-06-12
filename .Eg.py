@@ -18,3 +18,4 @@ def load_secret():
         return json.loads(result.stdout.decode("utf-8"))
     except Exception as e:
         raise Exception("Decrypted output is not valid JSON.\n" + str(e))
+
