@@ -40,11 +40,11 @@ fi
 echo -e "\n\e[1;36mUpdating Termux packages...\e[0m"
 pkg update -y && pkg upgrade -y
 
-# Step 2: Install Required Termux Packages
+# Step 2: Install Required Termux Packages (updated)
 echo -e "\e[1;36mInstalling required Termux packages...\e[0m"
-pkg install -y python git nano curl openssl
+pkg install -y python git nano curl openssl-tool
 
-# Step 3: Install Python yeand Dependencies
+# Step 3: Install Python and Dependencies
 echo -e "\e[1;36mUpgrading pip and installing Python libraries...\e[0m"
 pip install --upgrade pip
 
@@ -71,7 +71,6 @@ fi
 
 # Step 5: SSH Setup and Key Generation
 echo -e "\n\e[1;36mSetting up SSH...\e[0m"
-# Check if SSH is installed
 if ! command -v ssh &>/dev/null; then
     echo -e "\e[1;31mSSH client not found! Installing SSH...\e[0m"
     pkg install -y openssh
@@ -102,11 +101,7 @@ cloudflared --version
 echo -e "\e[1;33mSSH Version:\e[0m"
 ssh -V
 
-# Step 7: Clone the `joker-Eye.py` repository
-echo -e "\n\e[1;36mCloning the EgaleX5 tool repository...\e[0m"
-git clone https://github.com/egalex5/joker-Eye.git
-
-# Step 8: Display Final Instructions
+# Final Message
 clear
 echo -e "\e[1;32m=====================================\e[0m"
 echo -e "\e[1;33m      Setup Completed Successfully!\e[0m"
